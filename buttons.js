@@ -3,8 +3,14 @@
 
         .controller('myController', ['$scope', function ($scope) {
 
-            $scope.isBalanced = function (input) {
-                //TODO: check if the parenthesis in the input is balanced
+            $scope.getIsBalanced = function (input) {
+              var openingExpression = /\(/igm;
+              var closingExpression = /\)/igm;
+              var closingMatches;
+              var openingMatches = input.match(openingExpression);
+              var closingMatches = input.match(closingExpression);
+
+              return openingMatches.length === closingMatches.length
             };
 
             $scope.getDeepestLevel = function (input) {
