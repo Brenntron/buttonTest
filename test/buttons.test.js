@@ -69,4 +69,18 @@ describe('myController', function() {
       expect(unbalancedMessage).toEqual(expectedMessage);
     })
   })
+
+  describe('$scope.liveUpdate', function() {
+    describe('when isLiveUpdate is true', function() {
+      it('calls getIsbalanced, getDeepestLevel, and getAnswer with input as their argument', function() {
+        scope.isLiveUpdate = true;
+
+        scope.liveUpdate('((27 * 8) + 9)');
+
+        expect(scope.isBalanced).toBe(true);
+        expect(scope.deepestLevel).toEqual('27 * 8 and it is 2 layers deep.');
+        expect(scope.answer).toEqual(225);
+      })
+    })
+  })
 });
