@@ -2,6 +2,8 @@ describe('myController', function() {
   beforeEach(module('myApp'));
 
   var scope;
+  var expectedMessage = 'Unbalanced parenthesis.';
+
 
   beforeEach(inject(function($controller, $rootScope) {
     scope = $rootScope.$new();
@@ -27,8 +29,6 @@ describe('myController', function() {
   })
 
   describe('$scope.getDeepestLevel', function() {
-    var expected = 'Unbalanced parenthesis.';
-
     it('returns the deepest nested parens equation and it\'s depth.', function() {
       var deepestEquation = scope.getDeepestLevel('((4 + 5) x 7)');
 
@@ -38,13 +38,35 @@ describe('myController', function() {
     it('retuns an unbalanced parenthesis message if there are no parenthesis.', function() {
       var errorMessage = scope.getDeepestLevel('');
 
-      expect(errorMessage).toEqual(expected);
+      expect(errorMessage).toEqual(expectedMessage);
     })
 
     it('returns an unbalanced parenthesis message if the equation is unbalanced.', function() {
       var unbalancedMessage = scope.getDeepestLevel('(5 + 8 * 7');
 
-      expect(unbalancedMessage).toEqual(expected);
+      expect(unbalancedMessage).toEqual(expectedMessage);
+    })
+  })
+
+  describe('$scope.getAnswer', function() {
+    it('returns the answer to the equation', function() {
+      var expected = 225;
+      var equation = '((27 * 8) + 9)';
+      var answer = scope.getAnswer(equation);
+
+      expect(answer).toEqual(expected);
+    })
+
+    it('retuns an unbalanced parenthesis message if there are no parenthesis.', function() {
+      var errorMessage = scope.getAnswer('');
+
+      expect(errorMessage).toEqual(expectedMessage);
+    })
+
+    it('returns an unbalanced parenthesis message if the equation is unbalanced.', function() {
+      var unbalancedMessage = scope.getAnswer('(5 + 8 * 7');
+
+      expect(unbalancedMessage).toEqual(expectedMessage);
     })
   })
 });
