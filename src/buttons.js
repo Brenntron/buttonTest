@@ -47,8 +47,11 @@
             };
 
             $scope.getAnswer = function (input) {
-                //TODO: display the result of evaluating the input as a math expression
-                //hint: you can use eval()
+              if ($scope.getIsBalanced(input)) {
+                return eval(input);
+              } else {
+                return 'Unbalanced parenthesis.';
+              }
             };
         }]);
 })();
