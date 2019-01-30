@@ -25,19 +25,18 @@
 
                 for (char = 0; char < input.length; char++) {
                   // This is what 'if else' hell looks like.... let's refactor this.
-                  if (input[char] == '(') {
-                    currentDepth++;
-
-                    if (currentDepth > maxDepth) {
-                      maxDepth = currentDepth;
-                      deepestEquation = [];
-                    }
-                  } else if (input[char] == ')') {
-                    if (currentDepth > 0) {
+                  switch (true) {
+                    case (input[char] == '('):
+                      currentDepth++;
+                      deepestEquation = checkDeepestEquation(maxDepth, currentDepth, deepestEquation);
+                      maxDepth = checkMaxDepth(maxDepth, currentDepth);
+                      break;
+                    case (input[char] == ')' && currentDepth > 0):
                       currentDepth--;
-                    }
-                  } else if (currentDepth == maxDepth){
-                    deepestEquation.push(input[char]);
+                      break;
+                    case (currentDepth == maxDepth):
+                      deepestEquation.push(input[char]);
+                      break;
                   }
                 }
                 return deepestEquation.join('') + ' and it is ' + maxDepth + ' layers deep.';
@@ -53,5 +52,21 @@
                 return 'Unbalanced parenthesis.';
               }
             };
+
+          function checkDeepestEquation(maxDepth, currentDepth, currentEquation) {
+            if (currentDepth > maxDepth) {
+              return [];
+            } else {
+              return currentEquation;
+            }
+          }
+
+          function checkMaxDepth(maxDepth, currentDepth) {
+            if (currentDepth > maxDepth) {
+              return currentDepth;
+            } else {
+              return maxDepth;
+            }
+          }
         }]);
 })();
