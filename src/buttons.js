@@ -2,6 +2,8 @@
   angular.module('myApp', [])
     .controller('myController', ['$scope', function ($scope) {
 
+      $scope.isLiveUpdate = false;
+
       $scope.getIsBalanced = function (input) {
         var openingExpression = /\(/igm;
         var closingExpression = /\)/igm;
@@ -50,6 +52,14 @@
           return eval(input);
         } else {
           return 'Unbalanced parenthesis.';
+        }
+      };
+
+      $scope.liveUpdate = function (input) {
+        if ($scope.isLiveUpdate) {
+          $scope.isBalanced = $scope.getIsBalanced(input);
+          $scope.deepestLevel = $scope.getDeepestLevel(input);
+          $scope.answer = $scope.getAnswer(input);
         }
       };
 
